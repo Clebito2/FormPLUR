@@ -37,6 +37,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
         .tab-button::after {
@@ -124,15 +125,15 @@
             </div>
 
             <!-- Tabs Navigation -->
-            <div class="mb-8 overflow-x-auto pb-2">
-                <div id="tabs-container" class="flex space-x-4 sm:space-x-8 border-b border-gray-700">
-                    <button class="tab-button active text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(0)">Recepção e Atendimento</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(1)">Comercial e Vendas</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(2)">Financeiro e Admin</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(3)">Setor Técnico</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(4)">Infraestrutura</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(5)">Marketing</button>
-                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(6)">Qualidade e Docs</button>
+            <div class="mb-8">
+                <div id="tabs-container" class="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-x-8 border-b border-gray-700 pb-2">
+                    <button class="tab-button active text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(0)">Recepção e Atendimento</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(1)">Comercial e Vendas</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(2)">Financeiro e Admin</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(3)">Setor Técnico</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(4)">Infraestrutura</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(5)">Marketing</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-2 px-2" onclick="changeTab(6)">Qualidade e Docs</button>
                 </div>
             </div>
 
