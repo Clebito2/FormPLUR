@@ -1,15 +1,13 @@
-```html
 <!DOCTYPE html>
-<html lang=\\\"pt-br\\\">
+<html lang="pt-br">
 <head>
-    <meta charset=\\\"UTF-8\\\">
-    <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de diagnóstico - PLUR | Live Consultoria</title>
-    <script src=\\\"https://cdn.tailwindcss.com\\\"></script>
-    <link rel=\\\"preconnect\\\" href=\\\"https://fonts.googleapis.com\\\">
-    <link rel=\\\"preconnect\\\" href=\\\"https://fonts.gstatic.com\\\" crossorigin>
-    <link href=\\\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap\\\" rel=\\\"stylesheet\\\">
-    <meta name=\\\"theme-color\\\" content=\\\"#06192a\\\">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --azul-petroleo: #06192a;
@@ -18,10 +16,6 @@
             --branco: #ffffff;
             --font-primaria: 'Poppins', sans-serif;
             --font-secundaria: 'Merriweather', serif;
-        }
-
-        * {
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -33,38 +27,16 @@
                 radial-gradient(circle at top left, rgba(0, 232, 0, 0.05), transparent 40%),
                 radial-gradient(circle at bottom right, rgba(6, 25, 42, 0.5), transparent 50%);
             background-attachment: fixed;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         .text-brand-green { color: var(--verde-vibrante); }
         .bg-brand-dark { background-color: var(--azul-petroleo); }
         .font-brand-secondary { font-family: var(--font-secundaria); }
 
-        /* Otimizações para Mobile - Tabs */
-        .tabs-wrapper {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: linear-gradient(135deg, rgba(6, 25, 42, 0.95), rgba(6, 25, 42, 0.98));
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 232, 0, 0.1);
-            margin: -1rem -1rem 2rem -1rem;
-            padding: 0 1rem 0.5rem 1rem;
-        }
-
         .tab-button {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 48px; /* Touch target mínimo */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            border-radius: 8px;
-            padding: 12px 16px;
-            min-width: 120px;
         }
 
         .tab-button::after {
@@ -75,452 +47,316 @@
             width: 0;
             height: 3px;
             background-color: var(--verde-vibrante);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             transform: translateX(-50%);
-            border-radius: 2px;
         }
 
         .tab-button.active {
             color: var(--verde-vibrante);
-            background-color: rgba(0, 232, 0, 0.08);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .tab-button.active::after {
-            width: 80%;
-        }
-
-        .tab-button:hover:not(.active) {
-            background-color: rgba(255, 255, 255, 0.03);
+            width: 100%;
         }
         
         .tab-content {
             display: none;
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.6s ease-in-out;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cards otimizados para mobile */
         .question-group {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+            background-color: rgba(255, 255, 255, 0.03);
             border-left: 4px solid rgba(0, 232, 0, 0.3);
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-
         .question-group:hover {
             border-left-color: var(--verde-vibrante);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 232, 0, 0.1);
+            transform: translateX(5px);
         }
 
         .question-item {
             position: relative;
-            padding-left: 2rem;
-            line-height: 1.6;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
+            padding-left: 1.75rem; /* Space for the icon */
         }
-
         .question-item::before {
-            content: '▶';
+            content: '›';
             position: absolute;
-            left: 0.5rem;
+            left: 0;
             top: 50%;
             transform: translateY(-50%);
             color: var(--verde-vibrante);
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+         .question-item:hover::before {
+            transform: translateY(-50%) scale(1.2);
         }
 
-        .question-item:hover::before {
-            transform: translateY(-50%) translateX(3px);
-        }
-
-        /* Scroll customizado */
-        .tabs-scroll::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .tabs-scroll::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-        }
-
-        .tabs-scroll::-webkit-scrollbar-thumb {
-            background: var(--verde-vibrante);
-            border-radius: 2px;
-        }
-
-        /* Indicador de scroll para mobile */
-        .scroll-indicator {
-            display: none;
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--verde-vibrante);
-            font-size: 1.25rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Melhorias responsivas */
-        @media (max-width: 640px) {
-            .scroll-indicator {
-                display: block;
-            }
-            
-            .question-group {
-                margin-bottom: 1rem;
-            }
-            
-            .tab-button {
-                font-size: 0.875rem;
-                min-width: 100px;
-                padding: 10px 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tab-button {
-                font-size: 0.8rem;
-                min-width: 90px;
-                padding: 8px 12px;
-            }
-            
-            .question-item {
-                font-size: 0.9rem;
-                padding-left: 1.75rem;
-            }
-        }
-
-        /* Loading state */
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        /* Focus states para acessibilidade */
-        .tab-button:focus {
-            outline: 2px solid var(--verde-vibrante);
-            outline-offset: 2px;
-        }
-
-        /* Swipe indicators */
-        .swipe-hint {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 232, 0, 0.9);
-            color: var(--azul-petroleo);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            z-index: 1000;
-            animation: slideUp 0.5s ease;
-            display: none;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateX(-50%) translateY(100%); }
-            to { transform: translateX(-50%) translateY(0); }
-        }
     </style>
 </head>
-<body class=\\\"antialiased\\\">
+<body class="antialiased">
 
-    <div class=\\\"min-h-screen p-3 sm:p-6 md:p-8\\\">
-        <div class=\\\"max-w-7xl mx-auto\\\">
+    <div class="min-h-screen p-4 sm:p-6 md:p-8">
+        <div class="max-w-7xl mx-auto">
             
             <!-- Header -->
-            <header class=\\\"text-center mb-6 sm:mb-8\\\">
-                <img src=\\\"https://raw.githubusercontent.com/Clebito2/layout/main/Logo%20live%20oficial-36.png\\\" 
-                     alt=\\\"Logo Live Liderança & Vendas\\\" 
-                     class=\\\"h-12 sm:h-16 mx-auto mb-3 sm:mb-4\\\"
-                     loading=\\\"lazy\\\">
-                <h1 class=\\\"text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight\\\">Formulário de diagnóstico</h1>
-                <p class=\\\"text-base sm:text-lg text-gray-400 mt-2 font-brand-secondary\\\">Cliente: <span class=\\\"text-brand-green font-semibold\\\">PLUR</span></p>
+            <header class="text-center mb-8">
+                <img src="https://raw.githubusercontent.com/Clebito2/layout/main/Logo%20live%20oficial-36.png" alt="Logo Live Liderança & Vendas" class="h-16 mx-auto mb-4">
+                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Formulário de diagnóstico</h1>
+                <p class="text-lg text-gray-400 mt-2 font-brand-secondary">Cliente: <span class="text-brand-green font-semibold">PLUR</span></p>
             </header>
 
             <!-- Initial Instruction -->
-            <div class=\\\"mb-6 sm:mb-10 text-center p-4 sm:p-6 bg-gray-900/40 border border-gray-700 rounded-lg\\\">
-                <h2 class=\\\"font-semibold text-gray-200 text-lg sm:text-xl\\\">Instrução de Preenchimento</h2>
-                <p class=\\\"mt-2 text-sm sm:text-base text-gray-400 leading-relaxed\\\">Para cada departamento, o responsável pela área deve gravar um áudio respondendo às perguntas. O objetivo é capturar uma visão detalhada e honesta dos processos atuais.</p>
+            <div class="mb-10 text-center p-4 bg-gray-900/40 border border-gray-700 rounded-lg">
+                <h2 class="font-semibold text-gray-200">Instrução de Preenchimento</h2>
+                <p class="mt-1 text-sm text-gray-400">Para cada departamento, o responsável pela área deve gravar um áudio respondendo às perguntas. O objetivo é capturar uma visão detalhada e honesta dos processos atuais.</p>
             </div>
 
-            <!-- Tabs Navigation Wrapper -->
-            <div class=\\\"tabs-wrapper\\\">
-                <div class=\\\"tabs-scroll overflow-x-auto pb-2\\\" id=\\\"tabs-scroll\\\">
-                    <div id=\\\"tabs-container\\\" class=\\\"flex space-x-2 sm:space-x-4 border-b border-gray-700 relative\\\">
-                        <button class=\\\"tab-button active\\\" onclick=\\\"changeTab(0)\\\" data-tab=\\\"recepção\\\">
-                            <span>Recepção e Atendimento</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(1)\\\" data-tab=\\\"comercial\\\">
-                            <span>Comercial e Vendas</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(2)\\\" data-tab=\\\"financeiro\\\">
-                            <span>Financeiro e Admin</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(3)\\\" data-tab=\\\"tecnico\\\">
-                            <span>Setor Técnico</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(4)\\\" data-tab=\\\"infraestrutura\\\">
-                            <span>Infraestrutura</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(5)\\\" data-tab=\\\"marketing\\\">
-                            <span>Marketing</span>
-                        </button>
-                        <button class=\\\"tab-button\\\" onclick=\\\"changeTab(6)\\\" data-tab=\\\"qualidade\\\">
-                            <span>Qualidade e Docs</span>
-                        </button>
-                        <div class=\\\"scroll-indicator\\\">→</div>
-                    </div>
+            <!-- Tabs Navigation -->
+            <div class="mb-8 overflow-x-auto pb-2">
+                <div id="tabs-container" class="flex space-x-4 sm:space-x-8 border-b border-gray-700">
+                    <button class="tab-button active text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(0)">Recepção e Atendimento</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(1)">Comercial e Vendas</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(2)">Financeiro e Admin</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(3)">Setor Técnico</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(4)">Infraestrutura</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(5)">Marketing</button>
+                    <button class="tab-button text-sm sm:text-base font-semibold py-4 px-2 whitespace-nowrap" onclick="changeTab(6)">Qualidade e Docs</button>
                 </div>
             </div>
 
             <!-- Tabs Content -->
-            <div id=\\\"tabs-content-container\\\">
+            <div id="tabs-content-container">
                 
                 <!-- Tab 1: Recepção e Atendimento -->
-                <div class=\\\"tab-content active\\\">
-                    <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Controle de Matrículas e Cadastros</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Todos os alunos possuem matrícula formal? Existe um processo padronizado?</li>
-                                <li class=\\\"question-item\\\">Todos os alunos assinam contrato? Onde ficam arquivados?</li>
-                                <li class=\\\"question-item\\\">Existe um sistema informatizado para cadastros? Qual é e ele atende às necessidades?</li>
-                                <li class=\\\"question-item\\\">O controle de inadimplência é feito via sistema? Como identificamos e tratamos atrasos?</li>
+                <div class="tab-content active">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Controle de Matrículas e Cadastros</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Todos os alunos possuem matrícula formal? Existe um processo padronizado?</li>
+                                <li class="question-item">Todos os alunos assinam contrato? Onde ficam arquivados?</li>
+                                <li class="question-item">Existe um sistema informatizado para cadastros? Qual é e ele atende às necessidades?</li>
+                                <li class="question-item">O controle de inadimplência é feito via sistema? Como identificamos e tratamos atrasos?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Descrição de Produtos e Serviços</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe uma tabela detalhada e atualizada de todos os planos e preços?</li>
-                                <li class=\\\"question-item\\\">Há descrição completa de cada produto/serviço oferecido? (Academia, fisio, PLUR30, etc.)</li>
-                                <li class=\\\"question-item\\\">A recepção tem um script padrão para apresentar os serviços e benefícios?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Descrição de Produtos e Serviços</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe uma tabela detalhada e atualizada de todos os planos e preços?</li>
+                                <li class="question-item">Há descrição completa de cada produto/serviço oferecido? (Academia, fisio, PLUR30, etc.)</li>
+                                <li class="question-item">A recepção tem um script padrão para apresentar os serviços e benefícios?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Processo de Atendimento</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe um protocolo de atendimento para telefone e WhatsApp?</li>
-                                <li class=\\\"question-item\\\">Há integração entre os agendamentos de academia e fisioterapia no mesmo sistema?</li>
-                                <li class=\\\"question-item\\\">O processo de agendamento está documentado para treinar novos funcionários?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Processo de Atendimento</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe um protocolo de atendimento para telefone e WhatsApp?</li>
+                                <li class="question-item">Há integração entre os agendamentos de academia e fisioterapia no mesmo sistema?</li>
+                                <li class="question-item">O processo de agendamento está documentado para treinar novos funcionários?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 2: Comercial e Vendas -->
-                <div class=\\\"tab-content\\\">
-                     <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Processo de Vendas Estruturado</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe um funil de vendas definido? Sabemos quantas pessoas visitam e quantas viram clientes?</li>
-                                <li class=\\\"question-item\\\">Há metas de vendas estabelecidas (mensais, trimestrais)? Elas são acompanhadas?</li>
-                                <li class=\\\"question-item\\\">Medimos nossa taxa de conversão? Sabemos o percentual de visitantes que se tornam alunos?</li>
-                                <li class=\\\"question-item\\\">Temos controle do ticket médio? Conhecemos o valor médio gasto por cliente?</li>
+                <div class="tab-content">
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Processo de Vendas Estruturado</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe um funil de vendas definido? Sabemos quantas pessoas visitam e quantas viram clientes?</li>
+                                <li class="question-item">Há metas de vendas estabelecidas (mensais, trimestrais)? Elas são acompanhadas?</li>
+                                <li class="question-item">Medimos nossa taxa de conversão? Sabemos o percentual de visitantes que se tornam alunos?</li>
+                                <li class="question-item">Temos controle do ticket médio? Conhecemos o valor médio gasto por cliente?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Material de Apoio à Venda</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe um documento com nossos principais diferenciais para ajudar na argumentação?</li>
-                                <li class=\\\"question-item\\\">Temos respostas padronizadas para objeções comuns? (\\\"É muito caro\\\", \\\"Não tenho tempo\\\", etc.)</li>
-                                <li class=\\\"question-item\\\">Há materiais visuais de apoio às vendas? (Apresentações, fotos, depoimentos)</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Material de Apoio à Venda</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe um documento com nossos principais diferenciais para ajudar na argumentação?</li>
+                                <li class="question-item">Temos respostas padronizadas para objeções comuns? ("É muito caro", "Não tenho tempo", etc.)</li>
+                                <li class="question-item">Há materiais visuais de apoio às vendas? (Apresentações, fotos, depoimentos)</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Gestão de Leads e Follow-up</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Fazemos controle dos interessados que não fecharam? Existe um processo de acompanhamento?</li>
-                                <li class=\\\"question-item\\\">Há processo ativo de renovação de contratos? Entramos em contato antes do vencimento?</li>
-                                <li class=\\\"question-item\\\">Temos um sistema de indicação (\\\"Amigo PLUR\\\") formalizado com regras claras?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Gestão de Leads e Follow-up</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Fazemos controle dos interessados que não fecharam? Existe um processo de acompanhamento?</li>
+                                <li class="question-item">Há processo ativo de renovação de contratos? Entramos em contato antes do vencimento?</li>
+                                <li class="question-item">Temos um sistema de indicação ("Amigo PLUR") formalizado com regras claras?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 3: Financeiro e Admin -->
-                <div class=\\\"tab-content\\\">
-                    <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Controles Financeiros Diários</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">É feita conciliação bancária diária? (extrato vs. sistema)</li>
-                                <li class=\\\"question-item\\\">Usamos um sistema específico para lançar pagamentos e recebimentos? Qual?</li>
-                                <li class=\\\"question-item\\\">Trabalhamos com orçamento mensal/anual? Comparamos realizado vs. previsto?</li>
-                                <li class=\\\"question-item\\\">Os pagamentos são feitos via sistema bancário integrado ou manualmente?</li>
+                <div class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Controles Financeiros Diários</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">É feita conciliação bancária diária? (extrato vs. sistema)</li>
+                                <li class="question-item">Usamos um sistema específico para lançar pagamentos e recebimentos? Qual?</li>
+                                <li class="question-item">Trabalhamos com orçamento mensal/anual? Comparamos realizado vs. previsto?</li>
+                                <li class="question-item">Os pagamentos são feitos via sistema bancário integrado ou manualmente?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Organização Financeira</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Fazemos pagamentos diariamente ou em lotes? Qual a rotina?</li>
-                                <li class=\\\"question-item\\\">Existe controle de fluxo de caixa para projeções futuras (30/60/90 dias)?</li>
-                                <li class=\\\"question-item\\\">Há relatórios gerenciais periódicos (DRE, balanço)? Com que frequência?</li>
-                                <li class=\\\"question-item\\\">Temos controle rigoroso da inadimplência com uma régua de cobrança definida?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Organização Financeira</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Fazemos pagamentos diariamente ou em lotes? Qual a rotina?</li>
+                                <li class="question-item">Existe controle de fluxo de caixa para projeções futuras (30/60/90 dias)?</li>
+                                <li class="question-item">Há relatórios gerenciais periódicos (DRE, balanço)? Com que frequência?</li>
+                                <li class="question-item">Temos controle rigoroso da inadimplência com uma régua de cobrança definida?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Organização Documental e Legal</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Todas as licenças (Alvará, Bombeiros, etc.) estão organizadas em um só local?</li>
-                                <li class=\\\"question-item\\\">Existe um calendário de vencimento das licenças?</li>
-                                <li class=\\\"question-item\\\">Há notificação automática para renovar licenças?</li>
-                                <li class=\\\"question-item\\\">Temos controle de todas as taxas municipais/estaduais?</li>
-                                <li class=\\\"question-item\\\">Os contratos com fornecedores estão organizados e atualizados?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Organização Documental e Legal</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Todas as licenças (Alvará, Bombeiros, etc.) estão organizadas em um só local?</li>
+                                <li class="question-item">Existe um calendário de vencimento das licenças?</li>
+                                <li class="question-item">Há notificação automática para renovar licenças?</li>
+                                <li class="question-item">Temos controle de todas as taxas municipais/estaduais?</li>
+                                <li class="question-item">Os contratos com fornecedores estão organizados e atualizados?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 4: Setor Técnico -->
-                <div class=\\\"tab-content\\\">
-                    <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Protocolos de Avaliação</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe um protocolo padrão para avaliação física que todos os profissionais seguem?</li>
-                                <li class=\\\"question-item\\\">Há protocolo específico para avaliação fisioterapêutica com escalas padronizadas?</li>
-                                <li class=\\\"question-item\\\">As avaliações são registradas em sistema? Onde ficam arquivadas?</li>
-                                <li class=\\\"question-item\\\">Existe reavaliação periódica obrigatória? Com que frequência?</li>
+                <div class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Protocolos de Avaliação</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe um protocolo padrão para avaliação física que todos os profissionais seguem?</li>
+                                <li class="question-item">Há protocolo específico para avaliação fisioterapêutica com escalas padronizadas?</li>
+                                <li class="question-item">As avaliações são registradas em sistema? Onde ficam arquivadas?</li>
+                                <li class="question-item">Existe reavaliação periódica obrigatória? Com que frequência?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Prescrição e Acompanhamento</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Os treinos são prescritos seguindo uma metodologia definida?</li>
-                                <li class=\\\"question-item\\\">Existe protocolo de progressão de cargas? Como evoluímos os treinos?</li>
-                                <li class=\\\"question-item\\\">Há acompanhamento registrado da evolução dos clientes? Onde são anotados?</li>
-                                <li class=\\\"question-item\\\">Existe protocolo formal de comunicação fisio→academia para transição pós-alta?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Prescrição e Acompanhamento</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Os treinos são prescritos seguindo uma metodologia definida?</li>
+                                <li class="question-item">Existe protocolo de progressão de cargas? Como evoluímos os treinos?</li>
+                                <li class="question-item">Há acompanhamento registrado da evolução dos clientes? Onde são anotados?</li>
+                                <li class="question-item">Existe protocolo formal de comunicação fisio→academia para transição pós-alta?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Gestão da Equipe Técnica</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Todos os profissionais têm registro profissional (CREF/CREFITO) válido e arquivado?</li>
-                                <li class=\\\"question-item\\\">Há cronograma de capacitação da equipe (cursos, reciclagem, treinamentos)?</li>
-                                <li class=\\\"question-item\\\">Existe supervisão técnica documentada? Quem é o responsável técnico de cada área?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Gestão da Equipe Técnica</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Todos os profissionais têm registro profissional (CREF/CREFITO) válido e arquivado?</li>
+                                <li class="question-item">Há cronograma de capacitação da equipe (cursos, reciclagem, treinamentos)?</li>
+                                <li class="question-item">Existe supervisão técnica documentada? Quem é o responsável técnico de cada área?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 5: Infraestrutura -->
-                <div class=\\\"tab-content\\\">
-                    <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Cronogramas e Checklists</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe cronograma detalhado de limpeza (diário, semanal, mensal) para cada área?</li>
-                                <li class=\\\"question-item\\\">Há checklist de manutenção preventiva dos equipamentos? Com que periodicidade?</li>
-                                <li class=\\\"question-item\\\">Existe registro histórico de todas as manutenções realizadas?</li>
-                                <li class=\\\"question-item\\\">Há inspeção diária de segurança das instalações? Quem faz e onde registra?</li>
+                <div class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Cronogramas e Checklists</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe cronograma detalhado de limpeza (diário, semanal, mensal) para cada área?</li>
+                                <li class="question-item">Há checklist de manutenção preventiva dos equipamentos? Com que periodicidade?</li>
+                                <li class="question-item">Existe registro histórico de todas as manutenções realizadas?</li>
+                                <li class="question-item">Há inspeção diária de segurança das instalações? Quem faz e onde registra?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Controles de Segurança e Qualidade</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">O kit de primeiros socorros é inspecionado regularmente?</li>
-                                <li class=\\\"question-item\\\">Temos DEA (Desfibrilador) disponível? Ele é testado periodicamente?</li>
-                                <li class=\\\"question-item\\\">Existe controle da qualidade da água (limpeza de reservatório, análises)?</li>
-                                <li class=\\\"question-item\\\">Há controle de pragas contratado, com certificados atualizados?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Controles de Segurança e Qualidade</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">O kit de primeiros socorros é inspecionado regularmente?</li>
+                                <li class="question-item">Temos DEA (Desfibrilador) disponível? Ele é testado periodicamente?</li>
+                                <li class="question-item">Existe controle da qualidade da água (limpeza de reservatório, análises)?</li>
+                                <li class="question-item">Há controle de pragas contratado, com certificados atualizados?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Fornecedores e Suprimentos</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Temos lista de fornecedores homologados para manutenção e limpeza?</li>
-                                <li class=\\\"question-item\\\">Existe controle de estoque de materiais básicos (papel higiênico, sabonete, etc.)?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Fornecedores e Suprimentos</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Temos lista de fornecedores homologados para manutenção e limpeza?</li>
+                                <li class="question-item">Existe controle de estoque de materiais básicos (papel higiênico, sabonete, etc.)?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 6: Marketing -->
-                <div class=\\\"tab-content\\\">
-                     <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Identidade e Posicionamento</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Nossa logo atual expressa nossa missão? Ela comunica \\\"movimento e acolhimento\\\"?</li>
-                                <li class=\\\"question-item\\\">Temos manual de identidade visual (cores, fontes, aplicações da marca)?</li>
-                                <li class=\\\"question-item\\\">A identidade visual é consistente em todos os materiais e canais?</li>
+                <div class="tab-content">
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Identidade e Posicionamento</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Nossa logo atual expressa nossa missão? Ela comunica "movimento e acolhimento"?</li>
+                                <li class="question-item">Temos manual de identidade visual (cores, fontes, aplicações da marca)?</li>
+                                <li class="question-item">A identidade visual é consistente em todos os materiais e canais?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Público-Alvo (ICP)</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Temos nosso cliente ideal claramente definido? Sabemos quem queremos atingir?</li>
-                                <li class=\\\"question-item\\\">Conhecemos a idade média e a faixa de renda do nosso público?</li>
-                                <li class=\\\"question-item\\\">Sabemos o que nosso público busca (dores e desejos) e o que ele rejeita?</li>
-                                <li class=\\\"question-item\\\">Temos \\\"personas\\\" detalhadas dos nossos clientes típicos?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Público-Alvo (ICP)</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Temos nosso cliente ideal claramente definido? Sabemos quem queremos atingir?</li>
+                                <li class="question-item">Conhecemos a idade média e a faixa de renda do nosso público?</li>
+                                <li class="question-item">Sabemos o que nosso público busca (dores e desejos) e o que ele rejeita?</li>
+                                <li class="question-item">Temos "personas" detalhadas dos nossos clientes típicos?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Estratégia e Canais</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe calendário editorial para as redes sociais? O conteúdo é planejado?</li>
-                                <li class=\\\"question-item\\\">Existe processo de aprovação do conteúdo antes de publicar?</li>
-                                <li class=\\\"question-item\\\">Medimos os resultados das nossas publicações (alcance, engajamento)?</li>
-                                <li class=\\\"question-item\\\">Focamos nos canais digitais que nosso público mais usa?</li>
-                                <li class=\\\"question-item\\\">Existe um tom de voz definido para a marca (acolhedor, técnico, etc.)?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Estratégia e Canais</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe calendário editorial para as redes sociais? O conteúdo é planejado?</li>
+                                <li class="question-item">Existe processo de aprovação do conteúdo antes de publicar?</li>
+                                <li class="question-item">Medimos os resultados das nossas publicações (alcance, engajamento)?</li>
+                                <li class="question-item">Focamos nos canais digitais que nosso público mais usa?</li>
+                                <li class="question-item">Existe um tom de voz definido para a marca (acolhedor, técnico, etc.)?</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 7: Qualidade e Docs -->
-                <div class=\\\"tab-content\\\">
-                    <div class=\\\"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6\\\">
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Organização Documental</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Existe um repositório central para todos os documentos importantes?</li>
-                                <li class=\\\"question-item\\\">Há sistema de controle de versões dos documentos?</li>
-                                <li class=\\\"question-item\\\">Existe backup seguro de todos os arquivos digitais? Com que frequência?</li>
-                                <li class=\\\"question-item\\\">Há cronograma de revisão de documentos e processos?</li>
+                <div class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Organização Documental</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Existe um repositório central para todos os documentos importantes?</li>
+                                <li class="question-item">Há sistema de controle de versões dos documentos?</li>
+                                <li class="question-item">Existe backup seguro de todos os arquivos digitais? Com que frequência?</li>
+                                <li class="question-item">Há cronograma de revisão de documentos e processos?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Estrutura dos POPs</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Sabemos o que deve conter o cabeçalho de um POP profissional?</li>
-                                <li class=\\\"question-item\\\">Temos clareza da estrutura básica de um procedimento (objetivo, passo a passo, etc.)?</li>
-                                <li class=\\\"question-item\\\">Existe processo de aprovação para novos documentos? Quem valida?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Estrutura dos POPs</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Sabemos o que deve conter o cabeçalho de um POP profissional?</li>
+                                <li class="question-item">Temos clareza da estrutura básica de um procedimento (objetivo, passo a passo, etc.)?</li>
+                                <li class="question-item">Existe processo de aprovação para novos documentos? Quem valida?</li>
                             </ul>
                         </div>
-                        <div class=\\\"question-group p-4 sm:p-6 rounded-lg\\\">
-                            <h3 class=\\\"text-lg sm:text-xl font-bold text-brand-green mb-3 sm:mb-4\\\">Controle de Qualidade</h3>
-                            <ul class=\\\"space-y-3 sm:space-y-4 text-gray-300\\\">
-                                <li class=\\\"question-item\\\">Fazemos avaliação periódica da satisfação dos clientes?</li>
-                                <li class=\\\"question-item\\\">Existe registro de não-conformidades (quando algo não sai como planejado)?</li>
-                                <li class=\\\"question-item\\\">Há acompanhamento de indicadores de qualidade para medir nossa performance?</li>
+                        <div class="question-group p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-brand-green mb-4">Controle de Qualidade</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="question-item">Fazemos avaliação periódica da satisfação dos clientes?</li>
+                                <li class="question-item">Existe registro de não-conformidades (quando algo não sai como planejado)?</li>
+                                <li class="question-item">Há acompanhamento de indicadores de qualidade para medir nossa performance?</li>
                             </ul>
                         </div>
                     </div>
@@ -531,236 +367,23 @@
         </div>
     </div>
     
-    <!-- Swipe Hint -->
-    <div class=\\\"swipe-hint\\\" id=\\\"swipe-hint\\\">
-        👈 Deslize para navegar entre as abas
-    </div>
-    
-    <footer class=\\\"text-center py-6 sm:py-8\\\">
-        <p class=\\\"text-xs text-gray-600\\\">Desenvolvido por Cléber Donato</p>
+    <footer class="text-center py-8">
+        <p class="text-xs text-gray-600">Desenvolvido por Cléber Donato</p>
     </footer>
 
     <script>
         const tabs = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
-        const tabsContainer = document.getElementById('tabs-container');
-        const tabsScroll = document.getElementById('tabs-scroll');
-        const swipeHint = document.getElementById('swipe-hint');
-        let currentTab = 0;
-        let startX = 0;
-        let isScrolling = false;
 
-        // Função principal para mudança de abas
         function changeTab(index) {
-            if (index < 0 || index >= tabs.length) return;
-            
-            // Adiciona loading state
-            document.body.classList.add('loading');
-            
-            setTimeout(() => {
-                tabs.forEach((tab, i) => {
-                    tab.classList.toggle('active', i === index);
-                });
-                
-                tabContents.forEach((content, i) => {
-                    content.classList.toggle('active', i === index);
-                });
-                
-                currentTab = index;
-                scrollTabIntoView(index);
-                
-                // Remove loading state
-                document.body.classList.remove('loading');
-            }, 100);
-        }
-
-        // Scroll da aba ativa para o centro da tela
-        function scrollTabIntoView(index) {
-            const activeTab = tabs[index];
-            const scrollContainer = tabsScroll;
-            const containerWidth = scrollContainer.offsetWidth;
-            const tabLeft = activeTab.offsetLeft;
-            const tabWidth = activeTab.offsetWidth;
-            
-            const scrollLeft = tabLeft - (containerWidth / 2) + (tabWidth / 2);
-            
-            scrollContainer.scrollTo({
-                left: scrollLeft,
-                behavior: 'smooth'
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
             });
-        }
-
-        // Detecção de swipe para navegação mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const swipeDistance = touchEndX - touchStartX;
-            
-            if (Math.abs(swipeDistance) > swipeThreshold) {
-                if (swipeDistance > 0 && currentTab > 0) {
-                    // Swipe right - aba anterior
-                    changeTab(currentTab - 1);
-                } else if (swipeDistance < 0 && currentTab < tabs.length - 1) {
-                    // Swipe left - próxima aba
-                    changeTab(currentTab + 1);
-                }
-            }
-        }
-
-        // Event listeners para touch
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        // Navegação por teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentTab > 0) {
-                changeTab(currentTab - 1);
-            } else if (e.key === 'ArrowRight' && currentTab < tabs.length - 1) {
-                changeTab(currentTab + 1);
-            }
-        });
-
-        // Mostrar hint de swipe em dispositivos móveis
-        function showSwipeHint() {
-            if (window.innerWidth <= 768) {
-                swipeHint.style.display = 'block';
-                setTimeout(() => {
-                    swipeHint.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // Detectar se há scroll horizontal nas abas
-        function checkTabsOverflow() {
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            if (tabsContainer.scrollWidth > tabsContainer.offsetWidth) {
-                scrollIndicator.style.display = 'block';
-            } else {
-                scrollIndicator.style.display = 'none';
-            }
-        }
-
-        // Lazy loading para melhor performance
-        function lazyLoadContent() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('loaded');
-                    }
-                });
-            });
-
-            document.querySelectorAll('.question-group').forEach(group => {
-                observer.observe(group);
-            });
-        }
-
-        // Smooth scroll para links internos
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Otimização de performance para resize
-        let resizeTimeout;
-        function handleResize() {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                checkTabsOverflow();
-                scrollTabIntoView(currentTab);
-            }, 250);
-        }
-
-        // Preload das próximas abas para melhor UX
-        function preloadNextTab() {
-            if (currentTab < tabs.length - 1) {
-                const nextContent = tabContents[currentTab + 1];
-                nextContent.style.display = 'block';
-                nextContent.style.visibility = 'hidden';
-                setTimeout(() => {
-                    nextContent.style.display = 'none';
-                    nextContent.style.visibility = 'visible';
-                }, 100);
-            }
-        }
-
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            checkTabsOverflow();
-            lazyLoadContent();
-            initSmoothScroll();
-            
-            // Mostrar hint após 2 segundos em mobile
-            setTimeout(showSwipeHint, 2000);
-            
-            // Preload da segunda aba
-            setTimeout(preloadNextTab, 1000);
-        });
-
-        // Event listeners
-        window.addEventListener('resize', handleResize);
-        
-        // Otimização para scroll das abas
-        tabsScroll.addEventListener('scroll', () => {
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            if (tabsScroll.scrollLeft + tabsScroll.offsetWidth >= tabsScroll.scrollWidth - 10) {
-                scrollIndicator.style.opacity = '0.3';
-            } else {
-                scrollIndicator.style.opacity = '1';
-            }
-        });
-
-        // Feedback visual para touch
-        tabs.forEach(tab => {
-            tab.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.95)';
-            });
-            
-            tab.addEventListener('touchend', function() {
-                this.style.transform = '';
-            });
-        });
-
-        // Prevenção de zoom duplo toque em iOS
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Service Worker para cache (opcional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('SW registered: ', registration);
-                }).catch(function(registrationError) {
-                    console.log('SW registration failed: ', registrationError);
-                });
+            tabContents.forEach((content, i) => {
+                content.classList.toggle('active', i === index);
             });
         }
     </script>
 
 </body>
 </html>
-```
